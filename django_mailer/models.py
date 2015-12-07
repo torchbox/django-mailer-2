@@ -48,7 +48,7 @@ class QueuedMessage(models.Model):
     messages are sent first (secondarily sorted by the oldest message).
     
     """
-    message = models.OneToOneField(Message, editable=False)
+    message = models.OneToOneField(Message, editable=False, on_delete=models.CASCADE)
     priority = models.PositiveSmallIntegerField(choices=PRIORITIES,
                                             default=constants.PRIORITY_NORMAL)
     deferred = models.DateTimeField(null=True, blank=True)
@@ -87,7 +87,7 @@ class Log(models.Model):
     A log used to record the activity of a queued message.
     
     """
-    message = models.ForeignKey(Message, editable=False)
+    message = models.ForeignKey(Message, editable=False, on_delete=models.CASCADE)
     result = models.PositiveSmallIntegerField(choices=RESULT_CODES)
     date = models.DateTimeField(default=datetime.datetime.now)
     log_message = models.TextField()
